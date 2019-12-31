@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/dr110kit/DR110KIT.TXT</file>
+        <file>Resources/dr110kit/DR110SNR.WAV</file>
+        <file>Resources/dr110kit/DR110OHT.WAV</file>
+        <file>Resources/dr110kit/DR110KIK.WAV</file>
+        <file>Resources/dr110kit/DR110CYM.WAV</file>
+        <file>Resources/dr110kit/DR110CLP.WAV</file>
+        <file>Resources/dr110kit/DR110CHT.WAV</file>
+    </qresource>
+</RCC>
