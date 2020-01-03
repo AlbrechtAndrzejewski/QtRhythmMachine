@@ -1,7 +1,9 @@
+#include <iostream>
+#include <chrono>
+
+#include "BPMClock/bpmclockservice.h"
 #include "sequencedtrack.h"
 #include "sampleplayer.h"
-#include "BPMClock/bpmclockservice.h"
-#include <iostream>
 #include "constants.h"
 
 
@@ -20,9 +22,15 @@ void SequencedTrack::setStepValue(int id, int velocity) {
 }
 
 
-void SequencedTrack::timerHasTicked() {
+void SequencedTrack::timerHasTicked(std::chrono::time_point<std::chrono::system_clock> startTime) {
+
     if (m_steps[m_currentStep] > 0) {
-         m_instrument->play();
+       m_instrument->play();
+    }
+    auto playTime = std::chrono::system_clock::now();
+    std::chrono::duration<double> latency = playTime - startTime;
+    if (latency.count() > 0.001) {
+        std::cout << "Latency : " << latency.count() << std::endl;
     }
     m_currentStep == (Constants::STEP_RESOLUTION-1) ? m_currentStep = 0 : m_currentStep++;
 }

@@ -53,7 +53,7 @@ void RhythmDeck::initSequencers() {
 
 
 void RhythmDeck::mouseReleaseEvent(QMouseEvent *event) {
-    std::cout << "Deck clicked" << event->x() << ":"<< event->y() << std::endl;
+    std::cout << "Deck clicked at " << event->x() << ":"<< event->y() << std::endl;
 }
 
 

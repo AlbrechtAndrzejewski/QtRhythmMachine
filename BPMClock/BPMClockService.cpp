@@ -1,16 +1,18 @@
 #include "bpmclockservice.h"
 #include <iostream>
-#include <iomanip>
 #include <QTimer>
 #include "constants.h"
 
+
 static BPMClockService* sharedInstance = nullptr;
+
 
 int getUpdatePeriodInMillisecondFromBpm(int bpm, int resolution) {
 
    double pms = 1 / (double) ((bpm / 60) * (resolution/4)) * 1000;
    return pms;
 }
+
 
 BPMClockService* BPMClockService::getInstance() {
     if (sharedInstance == nullptr) {
@@ -45,7 +47,8 @@ void BPMClockService::setBPM(int newValue)
 
 
 void BPMClockService::tick() {
-    emit beatTicked();
+    m_lastUpdatedTime = std::chrono::system_clock::now();
+    emit beatTicked(m_lastUpdatedTime);
 }
 
 

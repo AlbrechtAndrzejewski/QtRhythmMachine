@@ -14,7 +14,7 @@ class SequencedTrack : public QObject
         void setStepValue(int id, int velocity);
 
     protected slots:
-        void timerHasTicked();
+        void timerHasTicked(std::chrono::time_point<std::chrono::system_clock> startTime);
 
     private :
         unsigned char m_steps[16];

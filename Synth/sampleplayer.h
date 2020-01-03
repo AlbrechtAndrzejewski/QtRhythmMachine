@@ -6,8 +6,9 @@
 #include <iostream>
 #include <string>
 
-class SamplePlayer
+class SamplePlayer : public QObject
 {
+    Q_OBJECT
 public:
     SamplePlayer(const std::string&);
     virtual ~SamplePlayer();
@@ -21,9 +22,11 @@ public:
     void setSample(const std::string& source) {
         m_effect->setSource(QUrl::fromLocalFile(source.c_str()));
     };
+    void onSoundLoaded();
 
 private:
     QSoundEffect* m_effect;
+    const std::string& m_path;
 };
 
 #endif // SAMPLEPLAYER_H
