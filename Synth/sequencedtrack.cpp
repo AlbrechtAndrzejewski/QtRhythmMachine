@@ -1,6 +1,6 @@
 #include "sequencedtrack.h"
 #include "sampleplayer.h"
-#include "BPMClock/BPMClockService.h"
+#include "BPMClock/bpmclockservice.h"
 #include <iostream>
 #include "constants.h"
 

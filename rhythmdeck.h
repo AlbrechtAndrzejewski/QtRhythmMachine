@@ -2,7 +2,9 @@
 #define MAINDECK_H
 
 #include <QWidget>
-#include <vector>
+#include <map>
+
+class StepSequencerSwitchrowController;
 
 class SamplePlayer;
 
@@ -18,7 +20,9 @@ private:
     void initSynths();
     void initSequencers();
 
-    std::vector<SamplePlayer*> m_instruments;
+    std::map<std::string, SamplePlayer*> m_instruments;
+    std::vector<StepSequencerSwitchrowController*> m_switchs;
+
 };
 
 #endif // MAINDECK_H

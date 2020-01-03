@@ -1,14 +1,18 @@
 #include "rhythmdeck.h"
 #include "Leds/stepsequencerledrowview.h"
 #include "RhythmSwitchs/stepsequencerswitchrowcontroller.h"
-#include "Synth/DrumKit/drumsampleplayer.h"
+#include "BPMClock/bpmdisplayview.h"
 #include <QWidget>
 #include <QLayout>
 #include <iostream>
 #include <QMouseEvent>
 
+#include <QLabel>
+
 #include "Synth/DrumKit/DR110Kit.h"
 #include "Synth/DrumKit/drumsampleplayer.h"
+
+#include "BPMClock/bpmclockservice.h"
 
 RhythmDeck::RhythmDeck()
 {
@@ -18,23 +22,29 @@ RhythmDeck::RhythmDeck()
     QGridLayout *gridLayout = new QGridLayout();
     gridLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 
+    QHBoxLayout* aRow = new QHBoxLayout();
+    aRow->setSpacing(0);
+    BPMDisplayView* bpmDisplay = new BPMDisplayView();
+    aRow->addWidget(bpmDisplay);
     StepSequencerLedRowView *leds = new StepSequencerLedRowView();
-    gridLayout->addWidget(leds,0,0);
+    aRow->addWidget(leds);
+    gridLayout->addLayout(aRow,0,0);
 
-    std::vector<StepSequencerSwitchrowController*> switchs;
-    for (size_t i=0; i<m_instruments.size(); i++) {
-        switchs.push_back(new StepSequencerSwitchrowController());
-        switchs[i]->linkToInstrument(m_instruments[i]);
-        gridLayout->addWidget(switchs[i]->view(),i+1,0);
+    int localCounter = 0;
+    for (const auto &pair : m_instruments) {
+        m_switchs.push_back(new StepSequencerSwitchrowController(pair.first));
+        m_switchs[localCounter]->linkToInstrument(pair.second);
+        gridLayout->addWidget(m_switchs[localCounter]->view(),localCounter+1,0);
+        localCounter++;
     }
     setLayout(gridLayout);
 }
 
 void RhythmDeck::initSynths() {
-    m_instruments.push_back(new DrumSamplePlayer(DR110Kit::KICK));
-    m_instruments.push_back(new DrumSamplePlayer(DR110Kit::SNARE));
-    m_instruments.push_back(new DrumSamplePlayer(DR110Kit::HIHAT));
-    m_instruments.push_back(new DrumSamplePlayer(DR110Kit::CLAPS));
+    m_instruments["HIHAT"] = new DrumSamplePlayer(DR110Kit::HIHAT);
+    m_instruments["CLAP"] = new DrumSamplePlayer(DR110Kit::CLAPS);
+    m_instruments["SNARE"] = new DrumSamplePlayer(DR110Kit::SNARE);
+    m_instruments["KICK"] = new DrumSamplePlayer(DR110Kit::KICK);
 }
 
 
@@ -48,7 +58,7 @@ void RhythmDeck::mouseReleaseEvent(QMouseEvent *event) {
 
 
 RhythmDeck::~RhythmDeck() {
-    for (size_t i=0; i<m_instruments.size(); i++) {
-        delete m_instruments[i];
+    for (const auto &pair : m_instruments) {
+        delete pair.second;
     }
 }

@@ -1,4 +1,4 @@
-#include "BPMClockService.h"
+#include "bpmclockservice.h"
 #include <iostream>
 #include <iomanip>
 #include <QTimer>
@@ -22,9 +22,25 @@ BPMClockService* BPMClockService::getInstance() {
 
 BPMClockService::BPMClockService()
 {
+    m_bpm = Constants::DEFAULT_BPM;
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout, this, QOverload<>::of(&BPMClockService::tick));
-    m_timer->start(getUpdatePeriodInMillisecondFromBpm(Constants::DEFAULT_BPM, Constants::STEP_RESOLUTION));
+    m_timer->start(getUpdatePeriodInMillisecondFromBpm(m_bpm, Constants::STEP_RESOLUTION));
+}
+
+
+int BPMClockService::getBPM()
+{
+    return m_bpm;
+}
+
+
+void BPMClockService::setBPM(int newValue)
+{
+    m_bpm = newValue;
+    m_timer->stop();
+    m_timer->start(getUpdatePeriodInMillisecondFromBpm(m_bpm, Constants::STEP_RESOLUTION));
+    emit bpmChanged(m_bpm);
 }
 
 

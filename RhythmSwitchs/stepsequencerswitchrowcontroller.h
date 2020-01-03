@@ -11,14 +11,18 @@ class SamplePlayer;
 
 class StepSequencerSwitchrowController : public ViewController, StepSequencerSwitchDelegate {
 public:
-    StepSequencerSwitchrowController();
+    StepSequencerSwitchrowController(const std::string&);
     ~StepSequencerSwitchrowController();
 
     void litStateChanged(int id, bool islit) override;
     void linkToInstrument(SamplePlayer*);
+    void showDisplayName(bool);
 
 private:
+    StepSequencerSwitchrowView* m_view;
     SequencedTrack* m_sequencedTrack;
+    std::string m_displayName;
+
 };
 
 #endif // STEPSEQUENCERSWITCHROWCONTROLLER_H

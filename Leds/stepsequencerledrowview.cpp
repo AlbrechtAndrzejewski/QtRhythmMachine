@@ -1,6 +1,6 @@
 #include "stepsequencerledrowview.h"
 #include <iostream>
-#include "BPMClock/BPMClockService.h"
+#include "BPMClock/bpmclockservice.h"
 #include <QPainter>
 #include <QLayout>
 #include "led.h"
@@ -13,13 +13,12 @@ StepSequencerLedRowView::StepSequencerLedRowView()
     m_currentStep = 0;
 
     QHBoxLayout *mainLayout = new QHBoxLayout();
-    mainLayout->setMargin(15);
+    mainLayout->setMargin(0);
     mainLayout->setContentsMargins(0,0,0,0);
     for (size_t i=0; i<Constants::STEP_RESOLUTION; i++) {
          m_leds[i] = new Led();
          mainLayout->addWidget(m_leds[i]);
     }
-
     setLayout(mainLayout);
 }
 
