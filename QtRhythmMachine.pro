@@ -20,6 +20,8 @@ INCLUDEPATH += ./ViewControllerBase/ ./BPMClock/ ./RythmSwitchs
 SOURCES += \
     BPMClock/bpmclockservice.cpp \
     BPMClock/bpmdisplayview.cpp \
+    Core/wavfileparser.cpp \
+    Core/wavplayer.cpp \
     Leds/led.cpp \
     Leds/stepsequencerledrowview.cpp \
     RhythmSwitchs/stepsequencerswitch.cpp \
@@ -34,6 +36,9 @@ SOURCES += \
 HEADERS += \
     BPMClock/bpmclockservice.h \
     BPMClock/bpmdisplayview.h \
+    Core/pcmwave.h \
+    Core/wavfileparser.h \
+    Core/wavplayer.h \
     Leds/led.h \
     Leds/stepsequencerledrowview.h \
     RhythmSwitchs/stepsequencerswitch.h \

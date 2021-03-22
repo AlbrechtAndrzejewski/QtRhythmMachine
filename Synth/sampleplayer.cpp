@@ -2,17 +2,15 @@
 
 SamplePlayer::SamplePlayer(const std::string& pathToResourceFile) : m_path(pathToResourceFile)
 {
-    m_effect = new QSoundEffect();
-    m_effect->setSource(QUrl::fromLocalFile(pathToResourceFile.c_str()));
-    m_effect->setLoopCount(1);
-    m_effect->setVolume(0.25f);
-    connect(m_effect, &QSoundEffect::loadedChanged, this, &SamplePlayer::onSoundLoaded);
+    m_player = new WavPlayer();
+    connect(m_player, &WavPlayer::loadedChanged, this, &SamplePlayer::onSoundLoaded);
+    m_player->loadFile(pathToResourceFile.c_str());
 }
 
 
 SamplePlayer::~SamplePlayer()
 {
-    delete m_effect;
+    delete m_player;
 }
 
 

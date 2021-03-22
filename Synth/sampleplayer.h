@@ -2,9 +2,12 @@
 #define SAMPLEPLAYER_H
 
 #include <QObject>
-#include <QSoundEffect>
 #include <iostream>
 #include <string>
+
+#include "Core/wavplayer.h"
+
+using namespace std;
 
 class SamplePlayer : public QObject
 {
@@ -14,18 +17,13 @@ public:
     virtual ~SamplePlayer();
 
     virtual void play() {
-        m_effect->play();
+        m_player->play();
     };
-    void stop() {
-        m_effect->stop();
-    };
-    void setSample(const std::string& source) {
-        m_effect->setSource(QUrl::fromLocalFile(source.c_str()));
-    };
+
     void onSoundLoaded();
 
 private:
-    QSoundEffect* m_effect;
+    WavPlayer* m_player;
     const std::string& m_path;
 };
 
